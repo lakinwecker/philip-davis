@@ -20,7 +20,7 @@ def post_price_change(r):
         emoji = ":chart_with_downwards_trend:"
     client.chat_postMessage(
       channel=channel_id,
-      text=f":mensa: update. Pledged: {r['pledged']}, Diff: {r['pledged'] - previous['pledged']}. :{emoji}:",
+      text=f":mensa: update. Pledged: {r['pledged']}, Diff: {r['pledged'] - previous['pledged']}. {emoji}",
       as_user=user_id
     )
 
