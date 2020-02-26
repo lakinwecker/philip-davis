@@ -1,4 +1,6 @@
 URL = "https://www.kickstarter.com/projects/soontech/regium-automatic-chess-e-board-0/stats.json?v=1"
+MAIN_URL = "https://www.kickstarter.com/projects/soontech/regium-automatic-chess-e-board-0"
+COMMENTS_URL = "https://www.kickstarter.com/projects/soontech/regium-automatic-chess-e-board-0/comments"
 import requests
 import time
 import os
@@ -16,11 +18,11 @@ def post_change(r):
     message = ":mensa: update."
     backers_count_diff = r['backers_count'] - previous['backers_count']
     if backers_count_diff != 0:
-        message +=  " # of backers change: {backers_count_diff}"
+        message +=  f" # of backers change: {backers_count_diff}. {MAIN_URL}"
 
     comments_count_diff = r['comments_count'] - previous['comments_count']
     if comments_count_diff != 0:
-        message +=  " # of comments change: {comments_count_diff}"
+        message +=  f" # of comments change: {comments_count_diff}. {COMMENTS_URL}"
 
     pledged_diff = r['pledged'] - previous['pledged']
     if pledged_diff != 0:
