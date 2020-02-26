@@ -18,22 +18,24 @@ def post_price_change(r):
         emoji = ":rocket:"
     else:
         emoji = ":chart_with_downwards_trend:"
-    client.chat_postMessage(
-      channel=channel_id,
-      text=f":mensa: update. Pledged: {r['pledged']}, Diff: {r['pledged'] - previous['pledged']}. {emoji}",
-      as_user=user_id
-    )
+    message = f":mensa: update. Previous: ${previous['pledged']:.2f} Pledged: ${r['pledged']:.2f}, Diff: {(r['pledged'] - previous['pledged']):.2f}. {emoji}"
+    print(message)
+    client.chat_postMessage(channel=channel_id, text=message, as_user=user_id)
 
 
 previous = {'pledged': 50000.0}
 while True:
-    print("Checking ...", end='')
-    r = requests.get(URL).json().get('project', {})
-    print("done.")
-    if r.get('pledged'):
-        r['pledged'] = float(r['pledged'])
-    if r != previous:
-        post_price_change(r)
-        previous = r
+    try:
+        print("Checking ...", end='')
+        r = requests.get(URL).json().get('project', {})
+        print("done.")
+        if r.get('pledged'):
+            r['pledged'] = float(r['pledged'])
+        if r != previous:
+            post_price_change(r)
+            previous = r
+    except:
+        import traceback
+        print(traceback.format_exc())
 
-    time.sleep(5)
+    time.sleep(60)
