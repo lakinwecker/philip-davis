@@ -25,17 +25,14 @@ def post_price_change(r):
     )
 
 
-previous = None
+previous = {'pledged': 50000.0}
 while True:
     print("Checking ...", end='')
     r = requests.get(URL).json().get('project', {})
     print("done.")
     if r.get('pledged'):
         r['pledged'] = float(r['pledged'])
-    if not previous:
-        previous = r
-        post_price_change(r)
-    elif r != previous:
+    if r != previous:
         post_price_change(r)
         previous = r
 
